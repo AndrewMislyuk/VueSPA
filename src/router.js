@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
+import firebase from "firebase/app";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -12,6 +13,7 @@ export default new Router({
       name: "home",
       meta: {
         layout: "main",
+        auth: true,
       },
       component: () => import("./views/vue-history.vue"),
     },
@@ -20,6 +22,7 @@ export default new Router({
       name: "errorpage",
       meta: {
         layout: "main",
+        auth: true,
       },
       component: () => import("./views/vue-error-page.vue"),
     },
@@ -28,6 +31,7 @@ export default new Router({
       name: "recordupdate",
       meta: {
         layout: "main",
+        auth: true,
       },
       component: () => import("./views/vue-record-update.vue"),
     },
@@ -36,6 +40,7 @@ export default new Router({
       name: "record",
       meta: {
         layout: "main",
+        auth: true,
       },
       component: () => import("./views/vue-record.vue"),
     },
@@ -49,3 +54,16 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requireAuth = to.matched.some((record) => record.meta.auth);
+
+  if (requireAuth && !currentUser) {
+    next("/login?message=login");
+  } else {
+    next();
+  }
+});
+
+export default router;

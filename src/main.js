@@ -9,10 +9,12 @@ import "firebase/auth";
 import "firebase/database";
 import store from "./store";
 import Vuelidate from "vuelidate";
+import tooltipDirective from "@/directives/tooltip.directive";
 
 Vue.config.productionTip = false;
 
 Vue.use(Vuelidate);
+Vue.directive("tooltip", tooltipDirective);
 Vue.filter("date", dateFilter);
 
 firebase.initializeApp({

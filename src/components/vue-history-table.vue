@@ -27,6 +27,7 @@
         <td>
           <button
             class="btn waves-effect waves-light orange"
+            v-tooltip="'Просмотр записи'"
             @click="$router.push(`/recordupdate/${client.id}`)"
           >
             <i class="material-icons">create</i>

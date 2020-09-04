@@ -21,6 +21,7 @@ export default {
       {
         title: "Главная",
         url: "/",
+        exact: true,
       },
       {
         title: "Новый клиент",
